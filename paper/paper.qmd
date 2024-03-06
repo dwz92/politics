@@ -1,14 +1,13 @@
 ---
-title: "My title"
-subtitle: "My subtitle if needed"
+title: "Analysis of Political Support in United States"
 author: 
-  - First author
-  - Another author
+  - Qi Er (Emma) Teng
 thanks: "Code and data are available at: LINK."
 date: today
 date-format: long
 abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
 format: pdf
+toc: true
 number-sections: true
 bibliography: references.bib
 ---
@@ -60,14 +59,21 @@ And also planes (@fig-planes). (You can change the height and width, but don't w
 #| warning: false
 #| message: false
 
-analysis_data <- read_csv(here::here("data/analysis_data/analysis_data.csv"))
+ces2020 <- read_csv(here::here("data/analysis_data/ces2020_cleaned.csv"))
 
-analysis_data |> 
-  ggplot(aes(x = width, y = length)) +
-  geom_point(alpha = 0.8) +
+ces2020 |>
+  ggplot(aes(x = education, fill = voted_for)) +
+  stat_count(position = "dodge") +
+  facet_wrap(facets = vars(gender)) +
   theme_minimal() +
-  labs(x = "Wing width (mm)",
-       y = "Wing length (mm)")
+  labs(
+    x = "Highest education",
+    y = "Number of respondents",
+    fill = "Voted for"
+  ) +
+  coord_flip() +
+  scale_fill_brewer(palette = "Set1") +
+  theme(legend.position = "bottom")
 ```
 
 Talk way more about it. 
@@ -210,7 +216,6 @@ plot(first_model, "trace")
 
 plot(first_model, "rhat")
 ```
-
 
 
 \newpage
